@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Button } from "antd";
 import { Link } from "react-router-dom";
 import CourseList from "./CourseList";
+import { connect } from "react-redux";
 
 class CourseListContainer extends Component {
   render() {
@@ -13,11 +14,15 @@ class CourseListContainer extends Component {
           </Button>
         </Col>
         <Col>
-          <CourseList />
+          <CourseList courses={this.props.courses} />
         </Col>
       </Row>
     );
   }
 }
 
-export default CourseListContainer;
+function mapStateToProps({ courses }) {
+  return { courses };
+}
+
+export default connect(mapStateToProps)(CourseListContainer);

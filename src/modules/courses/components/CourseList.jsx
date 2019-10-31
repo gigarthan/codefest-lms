@@ -29,7 +29,7 @@ class CourseList extends Component {
       <Row>
         <Col>
           <Row gutter={[16, 16]}>
-            <Col>{this.state.courses.map(this.renderCourse)}</Col>
+            <Col>{this.props.courses.map(this.renderCourse)}</Col>
           </Row>
         </Col>
         <Col></Col>
