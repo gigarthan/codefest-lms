@@ -2,7 +2,18 @@ import React, { Component } from "react";
 import { Row, Col, Form, Input, Button, Card, Typography } from "antd";
 const { Title } = Typography;
 class SignIn extends Component {
+  submit = () => {
+    console.log("submit");
+    this.props.form.validateFields((e, values) => {
+      if (!e) {
+        const { email, password } = values;
+        this.props.onSignIn({ email, password });
+      }
+    });
+  };
+
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
       <Row type="flex" justify="center" align="center">
         <Col span={8}>
@@ -10,12 +21,20 @@ class SignIn extends Component {
             <Title level={2}>Sign In</Title>
             <Form>
               <Form.Item>
-                <Input placeholder="Email" />
+                {getFieldDecorator("email", {
+                  rules: [{ type: "email" }, { required: true }]
+                })(<Input placeholder="Email" />)}
               </Form.Item>
               <Form.Item>
-                <Input placeholder="Password" type="password" />
+                {getFieldDecorator("password", {
+                  rules: [{ required: true }]
+                })(<Input placeholder="Password" type="password" />)}
               </Form.Item>
-              <Button style={{ width: "100%" }} type="primary">
+              <Button
+                onClick={this.submit}
+                style={{ width: "100%" }}
+                type="primary"
+              >
                 SignIn
               </Button>
             </Form>
@@ -26,4 +45,6 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+const withForm = Form.create("signin")(SignIn);
+
+export default withForm;
